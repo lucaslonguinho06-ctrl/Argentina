@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roteiro Buenos Aires — Carne & Vinho</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600;9..144,700;9..144,900&family=Work+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --carbon:#181210;
+    --carbon-2:#221912;
+    --malbec:#6E1E2B;
+    --malbec-deep:#4A1420;
+    --brasa:#C1440E;
+    --brasa-light:#E3752F;
+    --crema:#EFE3D0;
+    --crema-dim:#C9BBA3;
+    --ouro:#C9A227;
+    --humo:#8B7E74;
+    --line: rgba(239,227,208,0.14);
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:
+      radial-gradient(ellipse 900px 500px at 15% -5%, rgba(193,68,14,0.16), transparent 60%),
+      radial-gradient(ellipse 700px 500px at 100% 20%, rgba(110,30,43,0.22), transparent 55%),
+      var(--carbon);
+    color:var(--crema);
+    font-family:'Work Sans', sans-serif;
+    font-weight:400;
+    line-height:1.5;
+    min-height:100vh;
+    overflow-x:hidden;
+  }
+
+  /* subtle grill-grate texture */
+  body::before{
+    content:"";
+    position:fixed; inset:0;
+    background-image: repeating-linear-gradient(
+      115deg, transparent 0 38px, rgba(239,227,208,0.02) 38px 40px
+    );
+    pointer-events:none;
+    z-index:0;
+  }
+
+  .wrap{
+    max-width:900px;
+    margin:0 auto;
+    padding: 64px 28px 100px;
+    position:relative;
+    z-index:1;
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    text-align:center;
+    padding-bottom:56px;
+    margin-bottom:56px;
+    border-bottom:1px solid var(--line);
+    position:relative;
+  }
+
+  .hero .eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    letter-spacing:0.32em;
+    text-transform:uppercase;
+    color:var(--ouro);
+    margin-bottom:22px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:14px;
+  }
+  .hero .eyebrow::before, .hero .eyebrow::after{
+    content:"";
+    height:1px;
+    width:36px;
+    background:var(--ouro);
+    opacity:0.5;
+  }
+
+  .hero h1{
+    font-family:'Fraunces', serif;
+    font-optical-sizing:auto;
+    font-weight:600;
+    font-style:italic;
+    font-size:clamp(40px, 8vw, 76px);
+    line-height:1.02;
+    letter-spacing:-0.01em;
+    background:linear-gradient(180deg, var(--crema) 0%, var(--crema-dim) 100%);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+
+  .hero h1 em{
+    font-style:normal;
+    font-weight:900;
+    background:linear-gradient(120deg, var(--brasa-light), var(--brasa) 60%, var(--malbec));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+
+  .hero .sub{
+    margin-top:18px;
+    font-size:15.5px;
+    color:var(--humo);
+    letter-spacing:0.02em;
+  }
+
+  .hero .ember{
+    position:absolute;
+    width:5px; height:5px;
+    border-radius:50%;
+    background:var(--brasa-light);
+    box-shadow:0 0 10px 2px var(--brasa-light);
+    opacity:0;
+    animation: rise 4.5s ease-in infinite;
+  }
+  .e1{left:30%; bottom:0; animation-delay:0.2s;}
+  .e2{left:52%; bottom:0; animation-delay:1.6s;}
+  .e3{left:68%; bottom:0; animation-delay:3s;}
+  .e4{left:42%; bottom:0; animation-delay:2.2s;}
+
+  @keyframes rise{
+    0%{ transform:translateY(0) translateX(0); opacity:0; }
+    15%{ opacity:0.9; }
+    100%{ transform:translateY(-160px) translateX(12px); opacity:0; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .ember{animation:none; display:none;}
+  }
+
+  /* ---------- LEGEND ---------- */
+  .legend{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px 22px;
+    justify-content:center;
+    margin-top:28px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:11.5px;
+    color:var(--crema-dim);
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+  }
+  .legend span{display:flex; align-items:center; gap:7px;}
+  .legend i{
+    width:9px; height:9px; border-radius:50%; display:inline-block;
+  }
+  .dot-food{background:var(--brasa);}
+  .dot-wine{background:var(--malbec); border:1px solid var(--ouro);}
+  .dot-open{background:transparent; border:1px dashed var(--humo);}
+  .dot-move{background:var(--ouro);}
+
+  /* ---------- DAY CARD ---------- */
+  .day{
+    position:relative;
+    padding: 40px 0 40px 84px;
+    border-bottom:1px solid var(--line);
+  }
+  .day:last-child{border-bottom:none;}
+
+  /* wine stain ring marker */
+  .ring{
+    position:absolute;
+    left:0; top:40px;
+    width:64px; height:64px;
+    border-radius:50%;
+    border:2px solid var(--malbec);
+    box-shadow: 0 0 0 6px rgba(110,30,43,0.12), inset 0 0 14px rgba(110,30,43,0.35);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:radial-gradient(circle at 35% 30%, rgba(201,162,39,0.10), transparent 60%);
+  }
+  .ring .dayname{
+    font-family:'JetBrains Mono', monospace;
+    font-size:10px;
+    letter-spacing:0.06em;
+    text-align:center;
+    color:var(--ouro);
+    text-transform:uppercase;
+    line-height:1.25;
+  }
+
+  .day-head{
+    display:flex;
+    align-items:baseline;
+    gap:14px;
+    flex-wrap:wrap;
+    margin-bottom:6px;
+  }
+  .day-head h2{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-style:italic;
+    font-size:30px;
+    color:var(--crema);
+  }
+  .day-head .date{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    color:var(--humo);
+    letter-spacing:0.05em;
+  }
+
+  .items{
+    margin-top:20px;
+    display:flex;
+    flex-direction:column;
+    gap:13px;
+  }
+
+  .item{
+    display:grid;
+    grid-template-columns:20px 1fr;
+    gap:12px;
+    align-items:start;
+  }
+
+  .item .mark{
+    width:9px; height:9px;
+    border-radius:50%;
+    margin-top:6px;
+  }
+
+  .item .label{
+    font-family:'JetBrains Mono', monospace;
+    font-size:10.5px;
+    letter-spacing:0.09em;
+    text-transform:uppercase;
+    color:var(--humo);
+    display:block;
+    margin-bottom:2px;
+  }
+
+  .item .content{
+    font-size:16px;
+    color:var(--crema);
+  }
+  .item .content b{
+    font-weight:600;
+    color:#fff;
+  }
+  .item .meta{
+    font-size:13px;
+    color:var(--crema-dim);
+    margin-top:1px;
+  }
+
+  .item.open .content{
+    color:var(--humo);
+    font-style:italic;
+  }
+
+  /* highlight the marquee meals */
+  .feature{
+    margin-top:16px;
+    padding:16px 18px;
+    border:1px solid rgba(201,162,39,0.35);
+    border-radius:4px;
+    background:linear-gradient(120deg, rgba(110,30,43,0.18), rgba(193,68,14,0.06));
+    position:relative;
+  }
+  .feature::before{
+    content:"RESERVA CONFIRMADA";
+    position:absolute;
+    top:-9px; left:16px;
+    background:var(--carbon);
+    padding:0 8px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:9.5px;
+    letter-spacing:0.1em;
+    color:var(--ouro);
+  }
+  .feature .content{font-size:17px;}
+  .feature .content b{color:var(--brasa-light);}
+
+  /* ---------- FOOTER ---------- */
+  .footer{
+    margin-top:64px;
+    text-align:center;
+  }
+  .footer .quote{
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-weight:500;
+    font-size:20px;
+    color:var(--crema-dim);
+    max-width:520px;
+    margin:0 auto;
+    line-height:1.5;
+  }
+  .footer .quote span{color:var(--brasa-light); font-weight:700; font-style:normal;}
+  .footer .tag{
+    margin-top:18px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.28em;
+    text-transform:uppercase;
+    color:var(--humo);
+  }
+
+  @media (max-width:560px){
+    .day{padding-left:66px;}
+    .ring{width:52px; height:52px; top:36px;}
+    .ring .dayname{font-size:8.5px;}
+    .day-head h2{font-size:24px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="hero">
+    <span class="ember e1"></span><span class="ember e2"></span><span class="ember e3"></span><span class="ember e4"></span>
+    <div class="eyebrow">Buenos Aires · Roteiro</div>
+    <h1>Bife na brasa,<br><em>taça sempre cheia</em></h1>
+    <p class="sub">Cinco dias entre parrillas, malbec e as ruas de San Telmo</p>
+
+    <div class="legend">
+      <span><i class="dot-food"></i>Comida</span>
+      <span><i class="dot-wine"></i>Vinho / Drinks</span>
+      <span><i class="dot-move"></i>Deslocamento</span>
+      <span><i class="dot-open"></i>Em aberto</span>
+    </div>
+  </div>
+
+  <!-- SEXTA -->
+  <div class="day">
+    <div class="ring"><div class="dayname">Sex<br>03</div></div>
+    <div class="day-head">
+      <h2>Chegada</h2>
+      <span class="date">sexta-feira</span>
+    </div>
+    <div class="items">
+      <div class="item">
+        <span class="mark" style="background:var(--ouro)"></span>
+        <div>
+          <span class="label">Logística</span>
+          <div class="content">Passada rápida no <b>supermercado</b> — abastecendo a base para os próximos dias</div>
+        </div>
+      </div>
+      <div class="item">
+        <span class="mark" style="background:var(--humo); opacity:.5"></span>
+        <div>
+          <span class="label">Descanso</span>
+          <div class="content">Tarde livre no hotel, recuperando o fuso antes da maratona gastronômica</div>
+        </div>
+      </div>
+      <div class="item">
+        <span class="mark dot-wine" style="background:var(--malbec); border:1px solid var(--ouro)"></span>
+        <div>
+          <span class="label">Noite · Drinks</span>
+          <div class="content"><b>Rey de Copas</b> — drinkeria a 150m do hotel, esquentando a noite</div>
+        </div>
+      </div>
+      <div class="item">
+        <span class="mark dot-food" style="background:var(--brasa)"></span>
+        <div>
+          <span class="label">Jantar</span>
+          <div class="content"><b>Calden del Soho</b></div>
+          <div class="meta">a pé do hotel</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SABADO -->
+  <div class="day">
+    <div class="ring"><div class="dayname">Sáb<br>04</div></div>
+    <div class="day-head">
+      <h2>San Telmo</h2>
+      <span class="date">sábado</span>
+    </div>
+    <div class="items">
+      <div class="item">
+        <span class="mark dot-food" style="background:var(--brasa)"></span>
+        <div>
+          <span class="label">Café da manhã</span>
+          <div class="content">Combustível para o dia de feira e caminhada</div>
+        </div>
+      </div>
+      <div class="item">
+        <span class="mark dot-food" style="background:var(--brasa)"></span>
+        <div>
+          <span class="label">Almoço</span>
+          <div class="content"><b>Mercado de San Telmo</b> + passeio pela região</div>
+          <div class="meta">deslocamento de táxi</div>
+        </div>
+      </div>
+      <div class="item">
+        <span class="mark" style="background:var(--ouro)"></span>
+        <div>
+          <span class="label">Deslocamento</span>
+          <div class="content">Volta ao hotel para recarregar antes do jantar</div>
+        </div>
+      </div>
+      <div class="item">
+        <span class="mark dot-food" style="background:var(--brasa)"></span>
+        <div>
+          <span class="label">Jantar</span>
+          <div class="content"><b>Lo de Jesús</b></div>
+          <div class="meta">4 min a pé do hotel</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DOMINGO -->
+  <div class="day">
+    <div class="ring"><div class="dayname">Dom<br>05</div></div>
+    <div class="day-head">
+      <h2>Dia da Parrilla</h2>
+      <span class="date">domingo</span>
+    </div>
+    <div class="items">
+      <div class="item">
+        <span class="mark dot-food" style="background:var(--brasa)"></span>
+        <div>
+          <span class="label">Café da manhã</span>
+          <div class="content">Começo tranquilo, guardando espaço para o almoço</div>
+        </div>
+      </div>
+      <div class="feature">
+        <span class="label">Almoço</span>
+        <div class="content"><b>Parrilla La Brigada</b> — o clássico bife de chorizo argentino, cortado à mesa</div>
+      </div>
+      <div class="item open">
+        <span class="mark dot-open"></span>
+        <div>
+          <span class="label">Jantar</span>
+          <div class="content">Em aberto — noite livre para decidir</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEGUNDA -->
+  <div class="day">
+    <div class="ring"><div class="dayname">Seg<br>06</div></div>
+    <div class="day-head">
+      <h2>Don Julio</h2>
+      <span class="date">segunda-feira</span>
+    </div>
+    <div class="items">
+      <div class="feature">
+        <span class="label">Almoço · 13:30h</span>
+        <div class="content"><b>Don Julio</b> — reserva confirmada na parrilla mais cobiçada de Palermo</div>
+      </div>
+      <div class="item open">
+        <span class="mark dot-open"></span>
+        <div>
+          <span class="label">Jantar</span>
+          <div class="content">Em aberto — noite livre para decidir</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TERÇA -->
+  <div class="day">
+    <div class="ring"><div class="dayname">Ter<br>07</div></div>
+    <div class="day-head">
+      <h2>Dia livre</h2>
+      <span class="date">terça-feira</span>
+    </div>
+    <div class="items">
+      <div class="item open">
+        <span class="mark dot-open"></span>
+        <div>
+          <span class="label">Programação</span>
+          <div class="content">Sem planos ainda — espaço em branco para o que a viagem pedir</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p class="quote">Cinco dias, <span>quatro parrillas</span>, uma cidade que não cansa de servir mais uma taça.</p>
+    <p class="tag">Buenos Aires · Carne & Vinho</p>
+  </div>
+
+</div>
+
+</body>
+</html>
